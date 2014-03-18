@@ -29,7 +29,7 @@
 class RTCTimer;
 class RTCEvent
 {
-  friend class RTCTimer;
+  friend RTCTimer;
 public:
   enum RTCEventType {
     RTCEvent_None = 0,
