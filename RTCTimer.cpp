@@ -23,7 +23,6 @@
  * It was inspired by the Arduino Timer library by Simon Monk.
  */
 
-#include "Diag.h"
 #include "RTCTimer.h"
 
 #if 0
@@ -44,8 +43,6 @@ RTCTimer::RTCTimer()
 
 void RTCEvent::update(uint32_t now)
 {
-  //DIAGPRINT(F("update ")); DIAGPRINTLN(now);
-  //DIAGPRINT(F(" _lastEventTime ")); DIAGPRINTLN(_lastEventTime);
   if (now - _lastEventTime >= _period) {
     if (_lastEventTime == 0) {
       // In case this wasn't initialized properly
