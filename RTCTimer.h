@@ -19,7 +19,6 @@
  */
 
 #include <stdint.h>
-#include <Stream.h>
 
 #ifndef RTCTIMER_H_
 #define RTCTIMER_H_

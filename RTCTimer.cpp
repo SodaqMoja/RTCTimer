@@ -24,6 +24,7 @@
  */
 
 #include "RTCTimer.h"
+//#include "Diag.h"
 
 #if 0
 RTCEvent::RTCEvent()
@@ -43,12 +44,16 @@ RTCTimer::RTCTimer()
 
 void RTCEvent::update(uint32_t now)
 {
-  if (now - _lastEventTime >= _period) {
+  if ((int32_t)(now - (_lastEventTime + _period)) >= 0) {
+    //DIAGPRINT(F("RTCEvent::update ")); DIAGPRINTLN(_lastEventTime);
     if (_lastEventTime == 0) {
       // In case this wasn't initialized properly
       _lastEventTime = now;
     } else {
-      _lastEventTime += _period;
+      while ((int32_t)(now - (_lastEventTime + _period)) >= 0) {
+        // Skip all the events that are in the past
+        _lastEventTime += _period;
+      }
     }
     switch (_eventType) {
     case RTCEvent_Every:
