@@ -42,8 +42,9 @@ RTCTimer::RTCTimer()
 }
 #endif
 
-void RTCEvent::update(uint32_t now)
+bool RTCEvent::update(uint32_t now)
 {
+  bool doneEvent = false;
   if ((int32_t)(now - (_lastEventTime + _period)) >= 0) {
     //DIAGPRINT(F("RTCEvent::update ")); DIAGPRINTLN(_lastEventTime);
     if (_lastEventTime == 0) {
@@ -66,7 +67,9 @@ void RTCEvent::update(uint32_t now)
       // Done. Free the event.
       _eventType = RTCEvent_None;
     }
+    doneEvent = true;
   }
+  return doneEvent;
 }
 
 int8_t RTCTimer::every(uint32_t period, void (*callback)(uint32_t now),
@@ -131,7 +134,10 @@ void RTCTimer::update(uint32_t now)
 {
   for (uint8_t i = 0; i < sizeof(_events) / sizeof(_events[0]); ++i) {
     if (_events[i]._eventType != RTCEvent::RTCEvent_None) {
-      _events[i].update(now);
+      if (_events[i].update(now)) {
+        // Only one event action per update.
+        break;
+      }
     }
   }
 }

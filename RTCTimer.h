@@ -36,7 +36,7 @@ public:
   };
   //RTCEvent();
 
-  void update(uint32_t now);
+  bool update(uint32_t now);
 
 protected:
   enum RTCEventType _eventType;
