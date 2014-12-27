@@ -59,11 +59,13 @@ public:
   void adjust(uint32_t old, uint32_t now);
   void update();
   void update(uint32_t now);
+  void allowMultipleEvents(bool allow=true) { _noMultipleEvents = !allow; }
 
 protected:
   int8_t        findFreeEventIndex();
   uint32_t      (*_now)();
   RTCEvent      _events[MAX_NUMBER_OF_RTCEVENTS];
+  bool          _noMultipleEvents;
 };
 
 #endif /* RTCTIMER_H_ */

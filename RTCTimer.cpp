@@ -135,8 +135,10 @@ void RTCTimer::update(uint32_t now)
   for (uint8_t i = 0; i < sizeof(_events) / sizeof(_events[0]); ++i) {
     if (_events[i]._eventType != RTCEvent::RTCEvent_None) {
       if (_events[i].update(now)) {
-        // Only one event action per update.
-        break;
+        if (_noMultipleEvents) {
+          // Only one event action per update.
+          break;
+        }
       }
     }
   }
